@@ -6,13 +6,16 @@ var guessNum = 12;
 var words = ["cat", "dog", "robin", "cheeta", "mouse"]
 var randNum = Math.floor(Math.random() * (words.length - +min));
 var randWord = words[randNum]
+var userText = document.getElementById("letters")
 
 var blank = [];
 var letterWrong = [];
+var letterCorrect = [];
 
-
-function increment() {
+function incrementWin() {
     totWin += 1;
+}
+function incrementLoss() {
     totLoss += 1;
 }
 
@@ -20,9 +23,24 @@ for (i = 0; i < randWord.length; i++) {
     blank.push("_");
 }
 
+incrementLoss()
+incrementWin()
 
-
-increment()
+document.onkeydown = function (event) {
+    userText.textContent = event.key;
+    
+    var keyPress = userText.textContent;
+    
+    for (i = 0; i < randWord.length; i++) {
+        // var strLetter = randWord[i];
+        
+        if (randWord[i] === keyPress) {
+            letterWrong.push(keyPress);
+        } else {
+            letterCorrect.push(keyPress);
+        }
+    }
+};
 
 document.getElementById("wins").innerHTML = "wins: " + totWin;
 document.getElementById("losses").innerHTML = "losses: " + totLoss;
@@ -30,3 +48,5 @@ document.getElementById("losses").innerHTML = "losses: " + totLoss;
 document.getElementById("blanks").innerHTML = blank;
 document.getElementById("randWord").innerHTML = randWord;
 
+document.getElementById("wrongLetters").innerHTML = "correct letters: " + letterWrong;
+document.getElementById("correctLetters").innerHTML = "worng letters: " + letterCorrect;
