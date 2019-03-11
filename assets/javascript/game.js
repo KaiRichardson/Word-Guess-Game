@@ -42,11 +42,11 @@ document.onkeydown = function (event) {
     }
 };
 
-document.getElementById("wins").innerHTML = "wins: " + totWin;
-document.getElementById("losses").innerHTML = "losses: " + totLoss;
+document.getElementById("wins") = "wins: " + totWin;
+document.getElementById("losses") = "losses: " + totLoss;
 
-document.getElementById("blanks").innerHTML = blank;
-document.getElementById("randWord").innerHTML = randWord;
+document.getElementById("blanks") = blank;
+document.getElementById("randWord") = randWord;
 
-document.getElementById("wrongLetters").innerHTML = "correct letters: " + letterWrong;
-document.getElementById("correctLetters").innerHTML = "worng letters: " + letterCorrect;
+document.getElementById("wrongLetters") = "correct letters: " + letterWrong;
+document.getElementById("correctLetters") = "worng letters: " + letterCorrect;
