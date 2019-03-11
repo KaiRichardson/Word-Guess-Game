@@ -1,52 +1,115 @@
-var totWin = 0;
-var totLoss = 0;
-var min = 0;
-var guessNum = 12;
+//Ref to the DOM
+var newGameButtonHTML = document.getElementById("new-game-button");
+var placeHoldersHTML = document.getElementById("place-holders");
+var wordTestHTML = document.getElementById("word-test");
+var guessedLettersHTML = document.getElementById("guessed-letters");
+var guessesLeftHTML = document.getElementById("guesses-left");
+var winsHTML = document.getElementById("win-s");
+var lossesHTML = document.getElementById("loss-s");
 
-var words = ["cat", "dog", "robin", "cheeta", "mouse"]
-var randNum = Math.floor(Math.random() * (words.length - +min));
-var randWord = words[randNum]
-var userText = document.getElementById("letters")
+//Arrays
+var wordBank = ["camel", "bull", "bat", "cougar", "sheep", "rhinoceros", "ferret", "beaver", "panther", "turtle"];
+var pickedWordPlaceHolderArr = [];
+var incorrectLetterBank = [];
+var guessedLetterBank = [];
+var pickedWord = [];
 
-var blank = [];
-var letterWrong = [];
-var letterCorrect = [];
+//Vars
+var wins = 0;
+var losses = 0;
+var guessesLeft = 12;
 
-function incrementWin() {
-    totWin += 1;
-}
-function incrementLoss() {
-    totLoss += 1;
-}
+//game starts off
+var gameRunning = false;
 
-for (i = 0; i < randWord.length; i++) {
-    blank.push("_");
-}
+//newGame resets everything and picks new word
+function newGame() {
+    gameRunning = true;
+    guessesLeft = 12;
+    guessedLetterBank = [];
+    incorrectLetterBank = [];
+    pickedWordPlaceHolderArr = [];
 
-incrementLoss()
-incrementWin()
+    // picks random word from array
+    pickedWord = wordBank[Math.floor(Math.random() * wordBank.length)];
 
-document.onkeydown = function (event) {
-    userText.textContent = event.key;
-    
-    var keyPress = userText.textContent;
-    
-    for (i = 0; i < randWord.length; i++) {
-        // var strLetter = randWord[i];
-        
-        if (randWord[i] === keyPress) {
-            letterWrong.push(keyPress);
-        } else {
-            letterCorrect.push(keyPress);
-        }
+    //create placeholder out of new word
+    for (let i = 0; i < pickedWord.length; i++) {
+        pickedWordPlaceHolderArr.push("_");
     }
+
+    //Pushing everything to the DOM
+    guessesLeftHTML.textContent = guessesLeft;
+    placeHoldersHTML.textContent = pickedWordPlaceHolderArr.join(" ");
+    wordTestHTML.textContent = pickedWord;
+    guessedLettersHTML.textContent = incorrectLetterBank;
+
 };
 
-document.getElementById("wins") = "wins: " + totWin;
-document.getElementById("losses") = "losses: " + totLoss;
+//starts game after button press
+newGameButtonHTML.onclick = newGame;
 
-document.getElementById("blanks") = blank;
-document.getElementById("randWord") = randWord;
+//Tests pressed letter
+function letterGuess(letter) {
 
-document.getElementById("wrongLetters") = "correct letters: " + letterWrong;
-document.getElementById("correctLetters") = "worng letters: " + letterCorrect;
+    if (gameRunning === true && guessedLetterBank.indexOf(letter) === -1) {
+        //run game logic
+        guessedLetterBank.push(letter);
+
+        //checks pressed letter for match in word
+        for (let i = 0; i < pickedWord.length; i++) {
+            //convert guessed letter to lowercase
+            if (pickedWord[i] === letter.toLowerCase()) {
+                //then swap '_' for letter
+                pickedWordPlaceHolderArr[i] = letter;
+            }
+        }
+
+        placeHoldersHTML.textContent = pickedWordPlaceHolderArr.join(" ");
+
+        //checkwin
+        if (pickedWord == pickedWordPlaceHolderArr.join(" ")) {
+            wins++;
+            winsHTML.textContent = wins;
+            alert("you won! lets try again");
+            newGame();
+        }
+
+
+        // if not in word bank, add to worng letters
+        if (pickedWordPlaceHolderArr.indexOf(letter) === -1) {
+            //subtracts guesses
+            guessesLeft--;
+            // adds worng letter to array
+            incorrectLetterBank.push(letter);
+            // sends everything to the DOM
+            guessedLettersHTML.textContent = incorrectLetterBank.join(" ");
+            guessesLeftHTML.textContent = guessesLeft;
+
+            //checkloss
+            if (guessesLeft === 0) {
+                losses++;
+                lossesHTML.textContent = losses;
+                alert("you lost! lets try again");
+                newGame();
+            }
+
+        }
+
+    } else {
+        if (gameRunning === false) {
+            alert("click 'Start New Game' to play")
+        } else {
+            alert("already picked letter")
+        }
+    }
+}
+
+// onkeyup event triggers letterguess
+document.onkeydown = function (event) {
+
+    letterGuess(event.key);
+}
+
+
+
