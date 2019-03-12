@@ -1,5 +1,5 @@
 //Ref to the DOM
-var newGameButtonHTML = document.getElementById("new-game-button");
+// var newGameButtonHTML = document.getElementById("new-game-button");
 var placeHoldersHTML = document.getElementById("place-holders");
 var wordTestHTML = document.getElementById("word-test");
 var guessedLettersHTML = document.getElementById("guessed-letters");
@@ -19,7 +19,7 @@ var wins = 0;
 var losses = 0;
 var guessesLeft = 12;
 
-//game starts off
+//game starts as off
 var gameRunning = false;
 
 //newGame resets everything and picks new word
@@ -47,13 +47,14 @@ function newGame() {
 };
 
 //starts game after button press
-newGameButtonHTML.onclick = newGame;
+// newGameButtonHTML.onclick = newGame;
+
 
 //Tests pressed letter
 function letterGuess(letter) {
 
     if (gameRunning === true && guessedLetterBank.indexOf(letter) === -1) {
-        //run game logic
+        //add new letter to letterbank
         guessedLetterBank.push(letter);
 
         //checks pressed letter for match in word

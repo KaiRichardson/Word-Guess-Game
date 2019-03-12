@@ -1,6 +1,6 @@
 body {
     font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
-    background: url("/assets/images/dark-honeycomb.png");
+    background: url("../images/dark-honeycomb.png");
     background-repeat: repeat;
 }
 
@@ -28,11 +28,15 @@ header h1 {
     line-height: 2;
 }
 
-/* #place-holders {
-    position: absolute;
-    top: 8px;
-    left: 16px;
-} */
+#gypsy img {
+    width: 100%;
+}
+
+#place-holders {
+    position: relative;
+    bottom: 100px;
+    text-align: center;
+}
 
 footer {
     margin-top: auto;
