@@ -1,7 +1,7 @@
 //Ref to the DOM
-// var newGameButtonHTML = document.getElementById("new-game-button");
+var newGameButtonHTML = document.getElementById("new-game-button");
 var placeHoldersHTML = document.getElementById("place-holders");
-var wordTestHTML = document.getElementById("word-test");
+// var wordTestHTML = document.getElementById("word-test");
 var guessedLettersHTML = document.getElementById("guessed-letters");
 var guessesLeftHTML = document.getElementById("guesses-left");
 var winsHTML = document.getElementById("win-s");
@@ -41,13 +41,13 @@ function newGame() {
     //Pushing everything to the DOM
     guessesLeftHTML.textContent = guessesLeft;
     placeHoldersHTML.textContent = pickedWordPlaceHolderArr.join(" ");
-    wordTestHTML.textContent = pickedWord;
+    // wordTestHTML.textContent = pickedWord;
     guessedLettersHTML.textContent = incorrectLetterBank;
 
 };
 
 //starts game after button press
-// newGameButtonHTML.onclick = newGame;
+newGameButtonHTML.onclick = newGame;
 
 
 //Tests pressed letter
@@ -68,15 +68,6 @@ function letterGuess(letter) {
 
         placeHoldersHTML.textContent = pickedWordPlaceHolderArr.join(" ");
 
-        //checkwin
-        if (pickedWord == pickedWordPlaceHolderArr.join(" ")) {
-            wins++;
-            winsHTML.textContent = wins;
-            alert("you won! lets try again");
-            newGame();
-        }
-
-
         // if not in word bank, add to worng letters
         if (pickedWordPlaceHolderArr.indexOf(letter) === -1) {
             //subtracts guesses
@@ -86,7 +77,7 @@ function letterGuess(letter) {
             // sends everything to the DOM
             guessedLettersHTML.textContent = incorrectLetterBank.join(" ");
             guessesLeftHTML.textContent = guessesLeft;
-
+            
             //checkloss
             if (guessesLeft === 0) {
                 losses++;
@@ -94,14 +85,21 @@ function letterGuess(letter) {
                 alert("you lost! lets try again");
                 newGame();
             }
-
         }
-
+        
+        //checkwin
+        if (pickedWord == pickedWordPlaceHolderArr.join("")) {
+            wins++;
+            winsHTML.textContent = wins;
+            alert("you won! lets try again");
+            newGame();
+        }
+        
     } else {
         if (gameRunning === false) {
-            alert("click 'Start New Game' to play")
+            alert("click 'Start New Game' to play");
         } else {
-            alert("already picked letter")
+            alert("already picked letter");
         }
     }
 }
@@ -109,7 +107,11 @@ function letterGuess(letter) {
 // onkeyup event triggers letterguess
 document.onkeydown = function (event) {
 
-    letterGuess(event.key);
+    if (event.keyCode > 64 && event.keyCode < 91) {
+        letterGuess(event.key);
+    } else {
+        alert("that is not a letter!");
+    }
 }
 
 
