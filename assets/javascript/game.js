@@ -96,16 +96,14 @@ document.onkeyup = function () {
     if (guessesLeft === 0) {
         losses++;
         lossesHTML.textContent = losses;
-        winLossHTML.textContent = winLoss[2];
-        // alert("you lost! lets try again");
+        newGame()
     }
 
     //checkwin
     if (pickedWord == pickedWordPlaceHolderArr.join("")) {
         wins++;
         winsHTML.textContent = wins;
-        winLossHTML.textContent = winLoss[1];
-        // alert("you won! lets try again");
+        newGame()
     }
 }
 
