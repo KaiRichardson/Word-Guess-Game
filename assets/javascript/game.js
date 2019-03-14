@@ -1,14 +1,16 @@
 //Ref to the DOM
 var newGameButtonHTML = document.getElementById("new-game-button");
 var placeHoldersHTML = document.getElementById("place-holders");
-// var wordTestHTML = document.getElementById("word-test");
 var guessedLettersHTML = document.getElementById("guessed-letters");
 var guessesLeftHTML = document.getElementById("guesses-left");
 var winsHTML = document.getElementById("win-s");
 var lossesHTML = document.getElementById("loss-s");
+var winLossHTML = document.getElementById("won-loss");
+// var wordTestHTML = document.getElementById("word-test");
 
 //Arrays
 var wordBank = ["camel", "bull", "bat", "cougar", "sheep", "rhinoceros", "ferret", "beaver", "panther", "turtle"];
+var winLoss = ["", "You Won!", "You Lost!"];
 var pickedWordPlaceHolderArr = [];
 var incorrectLetterBank = [];
 var guessedLetterBank = [];
@@ -73,34 +75,37 @@ function letterGuess(letter) {
             //subtracts guesses
             guessesLeft--;
             // adds worng letter to array
-            incorrectLetterBank.push(letter);
+            incorrectLetterBank.push(letter.toUpperCase());
             // sends everything to the DOM
             guessedLettersHTML.textContent = incorrectLetterBank.join(" ");
             guessesLeftHTML.textContent = guessesLeft;
-            
-            //checkloss
-            if (guessesLeft === 0) {
-                losses++;
-                lossesHTML.textContent = losses;
-                alert("you lost! lets try again");
-                newGame();
-            }
         }
-        
-        //checkwin
-        if (pickedWord == pickedWordPlaceHolderArr.join("")) {
-            wins++;
-            winsHTML.textContent = wins;
-            alert("you won! lets try again");
-            newGame();
-        }
-        
+
     } else {
         if (gameRunning === false) {
             alert("click 'Start New Game' to play");
         } else {
-            alert("already picked letter");
+            
         }
+    }
+}
+
+document.onkeyup = function () {
+
+    //checkloss
+    if (guessesLeft === 0) {
+        losses++;
+        lossesHTML.textContent = losses;
+        winLossHTML.textContent = winLoss[2];
+        // alert("you lost! lets try again");
+    }
+
+    //checkwin
+    if (pickedWord == pickedWordPlaceHolderArr.join("")) {
+        wins++;
+        winsHTML.textContent = wins;
+        winLossHTML.textContent = winLoss[1];
+        // alert("you won! lets try again");
     }
 }
 
@@ -110,7 +115,7 @@ document.onkeydown = function (event) {
     if (event.keyCode > 64 && event.keyCode < 91) {
         letterGuess(event.key);
     } else {
-        alert("that is not a letter!");
+        
     }
 }
 

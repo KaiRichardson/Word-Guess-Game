@@ -41,9 +41,12 @@ button {
     font-family: 'Mogra', cursive;
     border-bottom: 3px solid #000b52;
     margin-bottom: 10px;
+    border-radius: 0 0 8px 8px;
+
 }
 
 button:hover {
+    cursor: pointer;
     background-color: #000b52;
 }
 
@@ -59,6 +62,14 @@ button:hover {
 }
 
 #place-holders {
+    color: #cccccc;
+    position: relative;
+    bottom: 240px;
+    text-align: center;
+    font-size: 30px;
+}
+
+#win-loss {
     color: #cccccc;
     position: relative;
     bottom: 240px;
